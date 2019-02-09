@@ -4,10 +4,6 @@ class Carousel {
     this.images = Array.from(this.element.querySelectorAll("img"));
     this.currentImage = 0;
 
-    console.log(this.currentImage);
-
-    console.log(this.images[this.currentImage]);
-
     this.images[this.currentImage].style.display = "inline-block";
 
     let leftNav = this.element.querySelector(".left-button");
@@ -18,7 +14,10 @@ class Carousel {
   }
 
   showImage(direction) {
-    this.images[this.currentImage].style.display = "none";
+    //this.images[this.currentImage].style.display = "none";
+    TweenLite.to(this.images[this.currentImage], 0.1, {
+      display: "none"
+    });
 
     switch (direction) {
       case "left":
@@ -30,15 +29,20 @@ class Carousel {
       default:
     }
 
-    if (this.currentImage <= 0) this.currentImage = this.images.length - 1;
-    else if (this.currentImage >= this.images.length - 1) this.currentImage = 0;
+    if (this.currentImage < 0) this.currentImage = this.images.length - 1;
+    else if (this.currentImage === this.images.length) this.currentImage = 0;
 
-    this.images[this.currentImage].style.display = "inline-block";
+    TweenLite.to(this.images[this.currentImage], 0.1, {
+      display: "inline-block",
+      opacity: "1"
+    });
+
+    //this.images[this.currentImage].style.display = "inline-block";
   }
 }
 
 let carousel = document.querySelector(".carousel");
-console.log(carousel);
+
 carousel = new Carousel(carousel);
 
 /* If You've gotten this far, you're on your own! Although we will give you some hints:
